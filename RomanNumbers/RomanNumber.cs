@@ -22,7 +22,7 @@
     }
     public static RomanNumber Add(RomanNumber? n1, RomanNumber? n2)
     {
-        if (n1 != null && n2 != null && n1.number + n2.number > 0)
+        if (n1 != null && n2 != null)
             return new RomanNumber((ushort)(n1.number + n2.number));
         else
             throw new RomanNumberException("Сложение этих чисел невозможно");
@@ -36,14 +36,14 @@
     }
     public static RomanNumber Mul(RomanNumber? n1, RomanNumber? n2)
     {
-        if (n1 != null && n2 != null && n1.number * n2.number > 0)
+        if (n1 != null && n2 != null)
             return new RomanNumber((ushort)(n1.number * n2.number));
         else
             throw new RomanNumberException("Умножение этих чисел невозможно");
     }
     public static RomanNumber Div(RomanNumber? n1, RomanNumber? n2)
     {
-        if (n1 != null && n2 != null && n1.number != 0 && n2.number != 0 && n1.number / n2.number > 0)
+        if (n1 != null && n2 != null && n1.number / n2.number > 0)
             return new RomanNumber((ushort)(n1.number / n2.number));
         else
             throw new RomanNumberException("Деление этих чисел невозможно");
@@ -61,7 +61,13 @@
             {1, "I"}
         };
 
-        Dictionary<short, string> rRDigits = new Dictionary<short, string>()
+        foreach (var digit in rDigits)
+        {
+            if(digit.Key == number)
+                return digit.Value;
+        }
+
+            Dictionary<short, string> rRDigits = new Dictionary<short, string>()
         {
             {-1, "I"},
             {-5, "V"},
