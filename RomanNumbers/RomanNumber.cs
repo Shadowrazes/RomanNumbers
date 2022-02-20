@@ -4,7 +4,7 @@
     private string romanNumber;
     internal RomanNumber(ushort n)
     {
-        if (n > 0)
+        if (n > 0 && n < 4000)
         {
             number = n;
             romanNumber = "";
