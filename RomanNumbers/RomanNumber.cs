@@ -11,12 +11,14 @@
 
     public object Clone()
     {
-        return new RomanNumber(1);
+        return new RomanNumber(number);
     }
 
     public int CompareTo(object? n)
     {
-        return 1;
+        if (n is RomanNumber rNumber)
+            return number - rNumber.number;
+        throw new RomanNumberException("Некорректный параметр передан в функцию");
     }
     public static RomanNumber Add(RomanNumber? n1, RomanNumber? n2)
     {
