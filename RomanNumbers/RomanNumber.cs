@@ -2,7 +2,7 @@
 {
     private ushort number;
     private string romanNumber;
-    internal RomanNumber(ushort n)
+    public RomanNumber(ushort n)
     {
         if (n > 0 && n < 4000)
         {
