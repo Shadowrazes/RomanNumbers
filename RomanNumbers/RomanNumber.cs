@@ -82,7 +82,7 @@
     }
     public static RomanNumber Add(RomanNumber? n1, RomanNumber? n2)
     {
-        if (n1 != null && n2 != null)
+        if (n1 != null && n2 != null && n1.number + n2.number < 4000)
             return new RomanNumber((ushort)(n1.number + n2.number));
         else
             throw new RomanNumberException("Сложение этих чисел невозможно");
