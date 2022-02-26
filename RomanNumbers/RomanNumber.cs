@@ -20,37 +20,8 @@
                 {1, "I"}
             };
 
-            foreach (var digit in rDigits)
-            {
-                if (digit.Key == number)
-                {
-                    romanNumber = digit.Value;
-                    return;
-                }
-            }
-
-            Dictionary<short, string> rRDigits = new Dictionary<short, string>()
-            {
-                {-1, "I"},
-                {-5, "V"},
-                {-10, "X"},
-                {-50, "L"},
-                {-100, "C"},
-                {-500, "D"},
-                {-1000, "M"},
-            };
-
             int buff = number;
-
-            short combineDigits(ushort highDigit)
-            {
-                foreach (var digit in rRDigits)
-                {
-                    if (digit.Key + highDigit != 0 && buff / (digit.Key + highDigit) > 0)
-                        return digit.Key;
-                }
-                return 0;
-            }
+            ushort wrapper = 1000;
 
             void writeSymbols(int n, string symb)
             {
@@ -60,23 +31,38 @@
                 }
             }
 
-            foreach (var digit in rDigits)
+            while (buff > 0)
             {
-                int count = buff / digit.Key;
+                int count = buff / wrapper;
                 if (count > 0 && count < 4)
                 {
-                    writeSymbols(count, digit.Value);
-                    buff -= digit.Key * count;
+                    writeSymbols(count, rDigits[wrapper]);
+                    buff -= count * wrapper;
                 }
-                else
+                if (count == 4)
                 {
-                    short revDigit = combineDigits(digit.Key);
-                    if (revDigit != 0)
-                    {
-                        romanNumber += rRDigits[revDigit] + digit.Value;
-                        buff -= digit.Key + revDigit;
-                    }
+                    romanNumber += rDigits[(ushort)(wrapper)];
+                    romanNumber += rDigits[(ushort)(wrapper * 5)];
+                    buff -= count * wrapper;
                 }
+                if (count == 5)
+                {
+                    romanNumber += rDigits[(ushort)(wrapper * count)];
+                    buff -= count * wrapper;
+                }
+                if (count > 5 && count < 9)
+                {
+                    romanNumber += rDigits[(ushort)(wrapper * 5)];
+                    writeSymbols(count - 5, rDigits[(ushort)(wrapper)]);
+                    buff -= count * wrapper;
+                }
+                if (count == 9)
+                {
+                    romanNumber += rDigits[(ushort)(wrapper)];
+                    romanNumber += rDigits[(ushort)(wrapper * 10)];
+                    buff -= count * wrapper;
+                }
+                wrapper /= 10;
             }
         }
         else
